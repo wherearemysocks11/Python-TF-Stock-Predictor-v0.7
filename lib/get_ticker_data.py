@@ -1,6 +1,5 @@
 import yfinance as yf
 import sqlite3 as sql
-import pandas as pd
 
 def get_ticker_data(ticker):
     try:
