@@ -11,18 +11,28 @@ class getData:
     def get_url(self, dataset):
         try:
             base_url = "https://api.worldbank.org/v2/country"
-            return f"{base_url}/{self.country_code}/indicator/{dataset}?format=json&date=1950:{datetime.now().year}"
+            return f"{base_url}/{self.country_code}/indicator/{dataset}?format=json&frequency=D&date=1950:{datetime.now().year}"
         except Exception as e:
             print(f"Error constructing URL for {self.country_code} {dataset}: {e}")
             return None
+   
+    def pop_data(self, data):
+        try:
+            df = pd.DataFrame(data[1])
+            processed_df = df[['date', 'value']]
+            return processed_df
+            
+        except Exception as e:
+            print(f"Error processing data: {e}")
+            return None
 
     def cpi(self):
-        cpi_dataset_code = "FP.CPI.TOTL"
+        cpi_dataset_code = "FP.CPI.TOTL.ZG"
         try:
             response = requests.get(self.get_url(cpi_dataset_code))
             response.raise_for_status()
             data = response.json()
-            df = pd.DataFrame(data[1])
+            df = self.pop_data(data)
             self.save_to_db(df, 'cpi')
             return df
         except Exception as e:
@@ -35,7 +45,7 @@ class getData:
             response = requests.get(self.get_url(gdp_dataset_code))
             response.raise_for_status()
             data = response.json()
-            df = pd.DataFrame(data[1])
+            df = self.pop_data(data)
             self.save_to_db(df, 'gdp')
             return df
         except Exception as e:
@@ -48,7 +58,7 @@ class getData:
             response = requests.get(self.get_url(ir_dataset_code))
             response.raise_for_status()
             data = response.json()
-            df = pd.DataFrame(data[1])
+            df = self.pop_data(data)
             self.save_to_db(df, 'ir')
             return df
         except Exception as e:
@@ -57,19 +67,11 @@ class getData:
 
     def save_to_db(self, data, indicator):
         try:
-            table_name = f'{indicator}_{self.country_code.lower()}'
-            data.to_sql(table_name, self.con, if_exists='replace', index=True)
-            print(f"Successfully saved data to table: {table_name}")
+            if data is not None and not data.empty:
+                table_name = f'{indicator}_{self.country_code.lower()}'
+                data.to_sql(table_name, self.con, if_exists='replace', index=False)
         except Exception as e:
             print(f"Error saving {indicator} data to database: {e}")
 
     def __del__(self):
-        if hasattr(self, 'con'):
-            self.con.close()
-
-# Example usage:
-if __name__ == "__main__":
-    data = getData("GBR")
-    data.cpi()
-    data.gdp()
-    data.ir()
+        self.con.close()

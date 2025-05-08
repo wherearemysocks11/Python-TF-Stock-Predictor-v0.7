@@ -23,7 +23,7 @@ class getTickerData:
             print(f"Error calculating DMA for {self.ticker}: {e}")
             return None
 
-    def save_to_db(self, dma_period):
+    def ticker_to_db(self, dma_period):
         try:
             data = self.get_data()
             if data is not None:
@@ -36,8 +36,3 @@ class getTickerData:
     def __del__(self):
         if hasattr(self, 'con'):
             self.con.close()
-
-
-if __name__ == "__main__":
-    ticker = getTickerData('^FTSE')
-    ticker.save_to_db(5)
