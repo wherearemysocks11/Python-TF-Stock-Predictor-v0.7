@@ -1,3 +1,9 @@
 yfinance
 pandas
 sqlalchemy
+requests
+numpy
+matplotlib
+seaborn
+pytest
+python-dateutil
