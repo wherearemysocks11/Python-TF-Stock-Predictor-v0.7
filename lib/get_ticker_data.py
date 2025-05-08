@@ -26,10 +26,10 @@ class getTickerData:
     def ticker_to_db(self, dma_period):
         try:
             data = self.get_data()
-            if data is not None:
-                data[(f'DMA_{dma_period}', self.ticker)] = self.calculate_dma(data.Close, dma_period)
-                data.to_sql('ticker', self.con, if_exists='replace', index=True)
-                print(f"Successfully saved {self.ticker} data with {dma_period}-day DMA to database")
+            data.columns = [col[0].lower() if isinstance(col, tuple) else col.lower() for col in data.columns]
+            data[(f'dma_{dma_period}')] = self.calculate_dma(data.close, dma_period)
+            data.to_sql('ticker', self.con, if_exists='replace', index=True)
+            print(f"Successfully saved {self.ticker} data with {dma_period}-day DMA to database")
         except Exception as e:
             print(f"Error saving {self.ticker} data to database: {e}")
 
