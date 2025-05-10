@@ -22,7 +22,6 @@ def build_db(tickers, countries):
                 print(f"Collecting data for {ticker}...")
                 ticker_data = getTickerData(ticker, dma_periods)
                 ticker_data.ticker_to_db()
-                print(f"Finished collecting data for {ticker}.\n")
             except Exception as e:
                 print(f"Error building {ticker} database: {e}")
                 continue
