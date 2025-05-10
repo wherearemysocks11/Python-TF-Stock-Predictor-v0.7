@@ -1,9 +1,8 @@
 from get_ticker_data import getTickerData
 from get_data_functions import getData
 
-def build_db():
+def build_db(tickers, countries):
     try:
-        countries = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND']
         for country in countries:
             try:
                 print(f"Collecting data for {country}...")
@@ -16,7 +15,6 @@ def build_db():
                 print(f"Error building {country} database: {e}")
                 continue
 
-        tickers = ['^FTLC']
         dma_periods = [5, 10, 50, 200, 365]
         
         for ticker in tickers:
