@@ -3,8 +3,9 @@ import sqlite3 as sql
 
 
 class getTickerData:
-    def __init__(self, ticker):
+    def __init__(self, ticker, dma_periods):
         self.ticker = ticker
+        self.dma_periods = dma_periods
         self.con = sql.connect("data.db")
 
     def get_data(self):
@@ -23,13 +24,18 @@ class getTickerData:
             print(f"Error calculating DMA for {self.ticker}: {e}")
             return None
 
-    def ticker_to_db(self, dma_period):
+    def ticker_to_db(self):
         try:
             data = self.get_data()
             data.columns = [col[0].lower() if isinstance(col, tuple) else col.lower() for col in data.columns]
-            data[(f'dma_{dma_period}')] = self.calculate_dma(data.close, dma_period)
+            for period in self.dma_periods:
+                data[f'dma_{period}'] = self.calculate_dma(data.close, period)
+            
+            # Converts datetime index to date only
+            data.index = data.index.date
+            
             data.to_sql('ticker', self.con, if_exists='replace', index=True)
-            print(f"Successfully saved {self.ticker} data with {dma_period}-day DMA to database")
+            print(f"Successfully saved {self.ticker} data with DMAs {self.dma_periods} to database")
         except Exception as e:
             print(f"Error saving {self.ticker} data to database: {e}")
 
