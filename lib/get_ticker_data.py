@@ -31,11 +31,14 @@ class getTickerData:
             for period in self.dma_periods:
                 data[f'dma_{period}'] = self.calculate_dma(data.close, period)
             
-            # Converts datetime index to date only
+            # Converts datetime index to date only and rename to 'date'
             data.index = data.index.date
+            data.index.name = 'date'
             
-            data.to_sql('ticker', self.con, if_exists='replace', index=True)
-            print(f"Successfully saved {self.ticker} data with DMAs {self.dma_periods} to database")
+            # Create table name from ticker symbol (removing special characters)
+            table_name = f"ticker_{self.ticker.replace('^', '').replace('-', '_')}"
+            data.to_sql(table_name, self.con, if_exists='replace', index=True)
+            print(f"Successfully saved {self.ticker} data with DMAs {self.dma_periods} to table {table_name}")
         except Exception as e:
             print(f"Error saving {self.ticker} data to database: {e}")
 

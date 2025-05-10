@@ -5,25 +5,31 @@ def build_db(con):
     try:
         countries = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND']
         for country in countries:
-            print(f"Collecting data for {country}...")
-            data = getData(country)
-            data.cpi()
-            data.gdp()
-            data.ir()
-            print(f"Finished collecting data for {country}.\n")
+            try:
+                print(f"Collecting data for {country}...")
+                data = getData(country)
+                data.cpi()
+                data.gdp()
+                data.ir()
+                print(f"Finished collecting data for {country}.\n")
+            except Exception as e:
+                print(f"Error building {country} database: {e}")
+                continue
 
-    except Exception as e:
-        print(f"Error building {country} database: {e}")
-
-    try:
         tickers = ['^FTLC']
-        dma_periods = [5, 10, 50, 200, 365]  # renamed to dma_periods for clarity
+        dma_periods = [5, 10, 50, 200, 365]
         
         for ticker in tickers:
-            print(f"Collecting data for {ticker}...")
-            ticker_data = getTickerData(ticker, dma_periods)
-            ticker_data.ticker_to_db()
-            print(f"Finished collecting data for {ticker}.\n")
+            try:
+                print(f"Collecting data for {ticker}...")
+                ticker_data = getTickerData(ticker, dma_periods)
+                ticker_data.ticker_to_db()
+                print(f"Finished collecting data for {ticker}.\n")
+            except Exception as e:
+                print(f"Error building {ticker} database: {e}")
+                continue
 
+        print("Database build process completed.")
+    
     except Exception as e:
-        print(f"Error building {ticker} database: {e}")
+        print(f"Error in building the database: {e}")
