@@ -7,3 +7,5 @@ matplotlib
 seaborn
 pytest
 python-dateutil
+tensorflow
+scikit-learn
