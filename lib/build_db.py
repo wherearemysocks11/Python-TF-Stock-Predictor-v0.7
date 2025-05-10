@@ -1,7 +1,7 @@
 from get_ticker_data import getTickerData
 from get_data_functions import getData
 
-def build_db(con):
+def build_db():
     try:
         countries = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND']
         for country in countries:

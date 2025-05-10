@@ -6,7 +6,6 @@ import sqlite3 as sql
 class getData:
     def __init__(self, country_code):
         self.country_code = country_code
-        self.con = sql.connect("data.db")
 
     def get_url(self, dataset):
         try:
@@ -69,9 +68,7 @@ class getData:
         try:
             if data is not None and not data.empty:
                 table_name = f'{indicator}_{self.country_code.lower()}'
-                data.to_sql(table_name, self.con, if_exists='replace', index=False)
+                with sql.connect("data.db") as con:
+                    data.to_sql(table_name, con, if_exists='replace', index=False)
         except Exception as e:
             print(f"Error saving {indicator} data to database: {e}")
-
-    def __del__(self):
-        self.con.close()
