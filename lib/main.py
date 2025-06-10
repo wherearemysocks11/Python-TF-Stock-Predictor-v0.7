@@ -2,9 +2,6 @@ from build_db import build_db
 from fetch_data import fetch_data
 from NN import NeuralNetwork
 from process_data import *
-from sklearn.preprocessing import StandardScaler
-import numpy as np
-from plot import plot_predictions_vs_actual
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # Disable GPU
 

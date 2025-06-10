@@ -21,7 +21,7 @@ class NeuralNetwork:
         self.model.compile(optimizer=adam, loss='mean_squared_error', metrics=['mae', 'mse'])
 
     def train(self, x_train, y_train, x_val, y_val, epochs=100):
-        early_stop = EarlyStopping(monitor='val_loss', patience=25, restore_best_weights=True)
+        early_stop = EarlyStopping(monitor='val_loss', patience=15, restore_best_weights=True)
         history = self.model.fit(x_train, y_train, epochs=epochs, callbacks=early_stop, validation_data=(x_val, y_val))
         return history  # Return training history
 

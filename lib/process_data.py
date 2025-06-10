@@ -2,7 +2,6 @@ from sklearn.preprocessing import StandardScaler
 import sklearn
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 
 def createWindows(data, windowSize):
     dataset = []
