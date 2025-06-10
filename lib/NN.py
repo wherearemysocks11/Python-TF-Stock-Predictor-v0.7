@@ -1,6 +1,8 @@
 import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping
 import os
+import numpy as np
+from sklearn.preprocessing import StandardScaler
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # Disable GPU
 
 class NeuralNetwork:
@@ -23,8 +25,14 @@ class NeuralNetwork:
         history = self.model.fit(x_train, y_train, epochs=epochs, callbacks=early_stop, validation_data=(x_val, y_val))
         return history  # Return training history
 
-    def predict(self, x_test):
-        return self.model.predict(x_test)
+    def predict(self, x_test, scaler, num_features):
+        prediction = self.model.predict(x_test)
+
+        prediction_reshaped = np.zeros((1, num_features))
+        prediction_reshaped[0, 0] = prediction[0][0]
+
+        unscaled_prediction = scaler.inverse_transform(prediction_reshaped)[0, 0]
+        return unscaled_prediction
     
     def evaluate(self, x_test, y_test):
         return self.model.evaluate(x_test, y_test)
