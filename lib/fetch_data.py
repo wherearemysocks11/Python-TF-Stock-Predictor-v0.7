@@ -17,9 +17,17 @@ def build_query():
             cursor = con.cursor()
             print("Building query...")
             tables = get_all_tables()
+            
+            # Find the ticker table (it starts with 'ticker_')
+            ticker_table = next((t for t in tables if t.startswith('ticker_')), None)
+            if not ticker_table:
+                raise Exception("No ticker table found in database")
+            
+            # Remove ticker table from the other tables list
+            other_tables = [t for t in tables if t != ticker_table]
 
             select_parts = []
-            for table in tables:
+            for table in [ticker_table] + other_tables:
                 cursor.execute(f"PRAGMA table_info({table})")
                 columns = cursor.fetchall()
                 for column in columns:
@@ -27,13 +35,12 @@ def build_query():
                     if column_name.lower() != 'date':
                         select_parts.append(f'"{table}"."{column_name}" as "{table}_{column_name}"')
             
-            query = f"SELECT {', '.join(select_parts)} FROM ticker"
+            query = f"SELECT {', '.join(select_parts)} FROM \"{ticker_table}\""
             
-            for table in tables:
-                if table != 'ticker':
-                    query += f' LEFT JOIN "{table}" ON "ticker".date = "{table}".date'
+            for table in other_tables:
+                query += f' LEFT JOIN "{table}" ON "{ticker_table}".date = "{table}".date'
             
-            query += ' ORDER BY "ticker".date ASC'
+            query += f' ORDER BY "{ticker_table}".date ASC'
             return query
             
     except Exception as e:
