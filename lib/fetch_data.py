@@ -33,7 +33,7 @@ def build_query():
                 if table != 'ticker':
                     query += f' LEFT JOIN "{table}" ON "ticker".date = "{table}".date'
             
-            query += ' ORDER BY "ticker".date DESC'
+            query += ' ORDER BY "ticker".date ASC'
             return query
             
     except Exception as e:
@@ -51,3 +51,4 @@ def fetch_data():
     except Exception as e:
         print(f"Error fetching data: {e}")
         return None
+

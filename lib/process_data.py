@@ -24,21 +24,26 @@ def createLabels(data, windowSize, labelColumn):
 
     return np.array(labels)
 
-def process_data(df):
-    df = df.fillna(0.0)
-    df = df.astype(float)
-    data_np = (pd.DataFrame(df)).to_numpy()
+def process_data(df, windowSize=5):
+    df = df.copy()
+    df = df.fillna(0.0).astype(float).infer_objects(copy=False)
+    data_np = df.to_numpy()
     standard_scaler = StandardScaler()
-    data_nps = np.array(standard_scaler.fit_transform(data_np))
-    train, test = sklearn.model_selection.train_test_split(data_nps, test_size=0.2, shuffle=False)
-    val, test = sklearn.model_selection.train_test_split(test, test_size=0.5, shuffle=False)
-    x_train = createWindows(train, 5)
-    y_train = createLabels(train, 5, 0)
-    x_val = createWindows(val, 5)
-    y_val = createLabels(val, 5, 0)
-    x_test = createWindows(test, 5)
-    y_test = createLabels(test, 5, 0)
-    return x_train, y_train, x_val, y_val, x_test, y_test
-
-
+    data_nps = standard_scaler.fit_transform(data_np)
     
+    train, val = sklearn.model_selection.train_test_split(data_nps, test_size=0.2, shuffle=False)
+    x_train = createWindows(train, windowSize)
+    y_train = createLabels(train, windowSize, 0)
+    x_val = createWindows(val, windowSize)
+    y_val = createLabels(val, windowSize, 0)
+    
+    return x_train, y_train, x_val, y_val
+
+def get_prediction_data(df, windowSize):
+    df = df.copy()
+    df = df.fillna(0.0).astype(float).infer_objects(copy=False)
+    latest_data = df.tail(windowSize+1)[:-1]  # Get last 5 complete days, excluding today
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(latest_data)
+    return np.array([scaled_data]), scaler
+
