@@ -30,4 +30,4 @@ pytest>=7.4.0
 # cudatoolkit>=11.8
 # cudnn>=8.7
 
-# run: python3 -m venv env && source env/bin/activate && pip install -r requirements.in
+# run: python3 -m venv env && source env/bin/activate && pip install -r requirements.txt
