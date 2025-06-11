@@ -80,9 +80,9 @@ def get_prediction_data(df, scaler, windowSize):
         df = df.copy()
         
         # Handle missing values
-        df = df.fillna(0.0)
+        df = df.fillna(0.0).infer_objects(copy=False)  # Using recommended approach
         df = df.apply(pd.to_numeric, errors='coerce')
-        df = df.fillna(0.0)
+        df = df.fillna(0.0).infer_objects(copy=False)  # Using recommended approach
         
         if df.isnull().any().any():
             raise ValueError("Data contains null values after preprocessing")
