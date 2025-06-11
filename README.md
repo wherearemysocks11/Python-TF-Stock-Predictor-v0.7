@@ -123,3 +123,4 @@ Feel free to submit issues and pull requests.
 - Yahoo Finance for stock data
 - World Bank for economic indicators
 - TensorFlow team for the deep learning framework
+- Github CoPilot (ChatGPT and Claude)
