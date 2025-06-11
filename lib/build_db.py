@@ -1,5 +1,5 @@
-from get_ticker_data import getTickerData
-from get_data_functions import getData
+from lib.get_ticker_data import getTickerData
+from lib.get_data_functions import getData
 from config import DMA_PERIODS
 from concurrent.futures import ThreadPoolExecutor, as_completed
 

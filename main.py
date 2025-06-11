@@ -1,7 +1,7 @@
-from build_db import build_db
-from fetch_data import fetch_data
-from NN import NeuralNetwork
-from process_data import process_data, get_prediction_data
+from lib.build_db import build_db
+from lib.fetch_data import fetch_data
+from lib.NN import NeuralNetwork
+from lib.process_data import process_data, get_prediction_data
 from config import *
 import os
 

@@ -1,0 +1,3 @@
+"""
+Stock Predictor library module
+"""

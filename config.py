@@ -4,15 +4,15 @@
 USE_GPU = False  # Set to True to enable GPU
 CUDA_VISIBLE_DEVICES = '-1' if not USE_GPU else '0'  # -1 disables GPU, 0 uses first GPU
 
-# Data collection settings
-TICKERS = ['^FTLC']
-COUNTRIES = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND']
-DMA_PERIODS = [5, 10, 50, 200, 365]
-
 # Model settings
 WINDOW_SIZE = 5
 EPOCHS = 500
-VALIDATION_SPLIT = 0.05
+VALIDATION_SPLIT = 0.025
+
+# Data collection settings
+TICKERS = ['^FTLC']
+COUNTRIES = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND']
+DMA_PERIODS = [WINDOW_SIZE, 5, 10, 50, 200, 365]
 
 # Neural Network settings
 NN_CONFIG = {
