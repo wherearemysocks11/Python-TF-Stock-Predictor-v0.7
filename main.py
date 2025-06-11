@@ -11,7 +11,7 @@ def main():
     try:
         # Build database
         print("Building database...")
-        build_db(TICKERS, COUNTRIES)
+        build_db(TICKER, COUNTRIES)
 
         # Fetch and validate data
         print("Fetching data...")

@@ -10,8 +10,8 @@ EPOCHS = 1000
 VALIDATION_SPLIT = 0.05
 
 # Data collection settings
-TICKERS = ['^FTLC']
-COUNTRIES = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND']
+TICKER = ['^FTLC']
+COUNTRIES = ['USA', 'GBR', 'EUU', 'JPN', 'CHN', 'IND', 'IE']
 DMA_PERIODS = [WINDOW_SIZE, 5, 10, 50, 200, 365]
 
 # Neural Network settings
