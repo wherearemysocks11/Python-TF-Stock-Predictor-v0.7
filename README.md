@@ -1,5 +1,18 @@
 # Stock Price Predictor
 
+⚠️ **DISCLAIMER**
+
+This software is for educational and research purposes only. It:
+- Is NOT financial advice
+- Should NOT be used for actual trading decisions
+- Makes NO guarantees about prediction accuracy
+- Does NOT guarantee any financial returns
+- May contain errors or inaccuracies
+
+Past performance does not guarantee future results. Always consult with a qualified financial advisor before making any investment decisions. The creators and contributors of this software are not responsible for any financial losses incurred from using this tool.
+
+## Overview
+
 A machine learning model that predicts stock prices using historical data and economic indicators. The model uses a neural network to analyze patterns in stock prices along with various economic indicators from different countries.
 
 ## Features
