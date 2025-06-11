@@ -24,24 +24,34 @@ def main():
         # Process data
         print("Processing data...")
         x_train, y_train, x_val, y_val, scaler = process_data(df, WINDOW_SIZE)
-        
-        # Train model
-        print("Training model...")
-        model = NeuralNetwork(input_shape=x_train[0].shape)
-        history = model.train(x_train, y_train, x_val, y_val, epochs=EPOCHS)
-        
-        # Print training results
-        final_loss = history.history['loss'][-1]
-        final_val_loss = history.history['val_loss'][-1]
-        print(f"\nTraining Results:")
-        print(f"Final Loss: {final_loss:.4f}")
-        print(f"Final Validation Loss: {final_val_loss:.4f}")
-
-        # Make prediction
-        print("\nMaking prediction...")
         prediction_data = get_prediction_data(df, scaler, WINDOW_SIZE)
-        prediction = model.predict(prediction_data, scaler, df.shape[1])
-        print(f"Predicted tomorrow's close price: £{prediction:.2f}")
+        
+        # Run multiple iterations of training and prediction
+        predictions = []
+        for i in range(NUM_PREDICTIONS):
+            print(f"\nTraining Model {i+1}/3...")
+            model = NeuralNetwork(input_shape=x_train[0].shape)
+            history = model.train(x_train, y_train, x_val, y_val, epochs=EPOCHS)
+            
+            # Print training results
+            final_loss = history.history['loss'][-1]
+            final_val_loss = history.history['val_loss'][-1]
+            print(f"Training Results {i+1}:")
+            print(f"Final Loss: {final_loss:.4f}")
+            print(f"Final Validation Loss: {final_val_loss:.4f}")
+
+            # Make prediction
+            print(f"Making prediction {i+1}...")
+            prediction = model.predict(prediction_data, scaler, df.shape[1])
+            predictions.append(prediction)
+            print(f"Model {i+1} prediction: £{prediction:.2f}")
+
+        # Calculate and display average
+        avg_prediction = sum(predictions) / len(predictions)
+        print("\nPrediction Summary:")
+        for i, pred in enumerate(predictions, 1):
+            print(f"Model {i}: £{pred:.2f}")
+        print(f"Average prediction: £{avg_prediction:.2f}")
 
     except Exception as e:
         print(f"An error occurred: {e}")
