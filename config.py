@@ -7,7 +7,7 @@ CUDA_VISIBLE_DEVICES = '-1' if not USE_GPU else '0'  # -1 disables GPU, 0 uses f
 # Model settings
 WINDOW_SIZE = 5
 EPOCHS = 500
-VALIDATION_SPLIT = 0.025
+VALIDATION_SPLIT = 0.05
 
 # Data collection settings
 TICKERS = ['^FTLC']

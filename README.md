@@ -30,6 +30,7 @@ A machine learning model that predicts stock prices using historical data and ec
 - Python 3.12 or higher
 - pip (Python package installer)
 - Internet connection for data downloads
+- TensorFlow
 
 ## Installation
 
