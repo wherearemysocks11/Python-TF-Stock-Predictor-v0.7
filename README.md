@@ -36,7 +36,7 @@ A machine learning model that predicts stock prices using historical data and ec
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Stock-Predictor-Prototype-v2.git
+git clone https://github.com/wherearemysocks11/Stock-Predictor-Prototype-v2.git
 cd Stock-Predictor-Prototype-v2
 ```
 
