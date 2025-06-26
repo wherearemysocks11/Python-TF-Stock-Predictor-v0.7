@@ -2,6 +2,8 @@ from lib.build_db import build_db
 from lib.fetch_data import fetch_data
 from lib.NN import NeuralNetwork
 from lib.process_data import process_data, get_prediction_data
+from lib.prediction_logger import log_prediction
+from datetime import datetime
 from config import *
 import os
 
@@ -52,6 +54,16 @@ def main():
         for i, pred in enumerate(predictions, 1):
             print(f"Model {i}: £{pred:.2f}")
         print(f"Average prediction: £{avg_prediction:.2f}")
+
+        # Log prediction and today's close price
+        today = datetime.now().strftime('%Y-%m-%d')
+        ticker = TICKER[0] if isinstance(TICKER, list) else TICKER
+        # Get today's close price from df (assume last row, first column is close)
+        try:
+            todays_close = float(df.iloc[-1, 0])
+        except Exception:
+            todays_close = None
+        log_prediction(date=today, ticker=ticker, predicted_close=avg_prediction, actual_close=todays_close)
 
     except Exception as e:
         print(f"An error occurred: {e}")
