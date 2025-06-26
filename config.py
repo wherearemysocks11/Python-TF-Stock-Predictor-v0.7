@@ -21,3 +21,6 @@ NN_CONFIG = {
     'learning_rate': 0.000001,
     'early_stop_patience': 15
 }
+
+# Schedule settings
+AUTO_START = "16:45"
