@@ -63,7 +63,7 @@ def main():
             todays_close = float(df.iloc[-1, 0])
         except Exception:
             todays_close = None
-        log_prediction(date=today, ticker=ticker, predicted_close=avg_prediction, actual_close=todays_close)
+        log_prediction(date=today, ticker=ticker, tomorrows_predicted_close=avg_prediction, todays_close=todays_close)
 
     except Exception as e:
         print(f"An error occurred: {e}")

@@ -52,7 +52,7 @@ def build_db(tickers, countries):
         raise
 
 def build_prediction_db(db_path='prediction_results.db'):
-    """Create a new database for storing daily predictions and actual close prices."""
+    """Create a new database for storing daily predictions and actual close prices with clear column names."""
     if not os.path.exists(db_path):
         conn = sqlite3.connect(db_path)
         c = conn.cursor()
@@ -61,8 +61,8 @@ def build_prediction_db(db_path='prediction_results.db'):
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 date TEXT NOT NULL,
                 ticker TEXT NOT NULL,
-                predicted_close REAL NOT NULL,
-                actual_close REAL,
+                tomorrows_predicted_close REAL NOT NULL,
+                todays_close REAL,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ''')

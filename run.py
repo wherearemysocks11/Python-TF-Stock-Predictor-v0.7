@@ -20,4 +20,4 @@ while True:
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"[{now}] Waiting for {AUTO_START}... Press Ctrl+C to exit.")
     schedule.run_pending()
-    time.sleep(30)
+    time.sleep(60)
