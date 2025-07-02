@@ -2,6 +2,8 @@ from lib.get_ticker_data import getTickerData
 from lib.get_data_functions import getData
 from config import DMA_PERIODS
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import sqlite3
+import os
 
 def process_country(country):
     """Process data for a single country."""
@@ -48,3 +50,24 @@ def build_db(tickers, countries):
     except Exception as e:
         print(f"Error in building the database: {e}")
         raise
+
+def build_prediction_db(db_path='prediction_results.db'):
+    """Create a new database for storing daily predictions and actual close prices with clear column names."""
+    if not os.path.exists(db_path):
+        conn = sqlite3.connect(db_path)
+        c = conn.cursor()
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS daily_predictions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                date TEXT NOT NULL,
+                ticker TEXT NOT NULL,
+                tomorrows_predicted_close REAL NOT NULL,
+                todays_close REAL,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        conn.commit()
+        conn.close()
+        print(f"Prediction results database created at {db_path}")
+    else:
+        print(f"Prediction results database already exists at {db_path}.")
