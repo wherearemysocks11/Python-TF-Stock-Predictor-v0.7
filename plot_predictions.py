@@ -23,16 +23,12 @@ def plot_predictions():
     predictions = [row[2] for row in data]
     closes = [row[3] for row in data]
     tickers = list(set(row[1] for row in data))
+    # Offset predictions by one day to represent tomorrow's close prediction
+    pred_dates = [d + datetime.timedelta(days=1) for d in dates]
     plt.figure(figsize=(12, 6))
-    plt.plot(dates, predictions, marker='o', linestyle='-', label='Predicted Close')
+    plt.plot(pred_dates, predictions, marker='o', linestyle='--', label='Predicted Close (Tomorrow)')  # Dotted line for predictions
     if any(closes):
-        plt.plot(dates, closes, marker='x', linestyle='--', label='Actual Close')
-    # Add tomorrow's prediction if available
-    if predictions:
-        last_date = dates[-1]
-        tomorrow = last_date + datetime.timedelta(days=1)
-        tomorrow_pred = predictions[-1]
-        plt.scatter([tomorrow], [tomorrow_pred], color='red', marker='*', s=200, label="Tomorrow's Prediction")
+        plt.plot(dates, closes, marker='x', linestyle='-', label='Actual Close')  # Solid line for actuals
     plt.xlabel('Day')
     plt.ylabel('Price')
     plt.title(f'Stock Predictions Over Time{f" ({tickers[0]})" if len(tickers)==1 else ""}')
