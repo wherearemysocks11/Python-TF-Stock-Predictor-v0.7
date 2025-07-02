@@ -1,10 +1,10 @@
 import schedule
 import time
 from config import AUTO_START
-import main  # Import the main module
+import main 
 
 def run_main():
-    main.main()  # Assuming there's a main() function in main.py
+    main.main() 
 
 schedule.every().day.at(AUTO_START).do(run_main)
 
