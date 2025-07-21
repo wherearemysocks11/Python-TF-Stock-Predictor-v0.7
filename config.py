@@ -1,7 +1,7 @@
 """Configuration settings for the stock predictor."""
 
 # Hardware settings
-USE_GPU = False # Set to True to enable GPU
+USE_GPU = False  # Set to True to enable GPU
 CUDA_VISIBLE_DEVICES = '-1' if not USE_GPU else '0'  # -1 disables GPU, 0 uses first GPU
 
 # Model settings

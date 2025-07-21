@@ -5,10 +5,10 @@ import main  # Import the main module
 import datetime
 
 def run_main():
-    # Only run on days except Friday (4) and Saturday (5)
+    # Only run on weekdays (Monday=0, Sunday=6)
     today = datetime.datetime.now()
-    if today.weekday() in [4, 5]:  # 4=Friday, 5=Saturday
-        print("Market closed: skipping run (Will next run on Sunday)")
+    if today.weekday() >= 5:  # 5=Saturday, 6=Sunday
+        print("Market closed: skipping run (weekend)")
         return
     from lib.build_db import build_prediction_db
     build_prediction_db()  # Ensure the prediction results DB exists before running main
