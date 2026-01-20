@@ -1,4 +1,6 @@
 env
+venv
+.vscode
 __pycache__
 lib/__pycache__
 data.db
