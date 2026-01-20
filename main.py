@@ -46,14 +46,14 @@ def main():
             print(f"Making prediction {i+1}...")
             prediction = model.predict(prediction_data, scaler, df.shape[1])
             predictions.append(prediction)
-            print(f"Model {i+1} prediction: £{prediction:.2f}")
+            print(f"Model {i+1} prediction: {prediction:.2f}")
 
         # Calculate and display average
         avg_prediction = sum(predictions) / len(predictions)
         print("\nPrediction Summary:")
         for i, pred in enumerate(predictions, 1):
-            print(f"Model {i}: £{pred:.2f}")
-        print(f"Average prediction: £{avg_prediction:.2f}")
+            print(f"Model {i}: {pred:.2f}")
+        print(f"Average prediction: {avg_prediction:.2f}")
 
         # Log prediction and today's close price
         today = datetime.now().strftime('%Y-%m-%d')

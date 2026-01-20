@@ -28,7 +28,7 @@ def build_query():
 
             select_parts = []
             for table in [ticker_table] + other_tables:
-                cursor.execute(f"PRAGMA table_info({table})")
+                cursor.execute(f'PRAGMA table_info("{table}")')
                 columns = cursor.fetchall()
                 for column in columns:
                     column_name = column[1]

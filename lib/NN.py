@@ -15,9 +15,13 @@ class NeuralNetwork:
         layers = [tf.keras.layers.Input(shape=input_shape),
                  tf.keras.layers.Flatten()]
         
-        # Add dense layers from configuration
+        # Add dense layers with dropout and L2 regularization
+        l2_reg = tf.keras.regularizers.l2(NN_CONFIG.get('l2_regularization', 0.001))
+        dropout_rate = NN_CONFIG.get('dropout_rate', 0.3)
+        
         for units in NN_CONFIG['dense_layers'][:-1]:
-            layers.append(tf.keras.layers.Dense(units, activation='relu'))
+            layers.append(tf.keras.layers.Dense(units, activation='relu', kernel_regularizer=l2_reg))
+            layers.append(tf.keras.layers.Dropout(dropout_rate))
         
         # Add final output layer
         layers.append(tf.keras.layers.Dense(NN_CONFIG['dense_layers'][-1]))
